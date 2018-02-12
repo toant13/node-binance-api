@@ -223,20 +223,20 @@ LIMIT_MAKER
     };
     // reworked Tuitio's heartbeat code into a shared single interval tick
     const noop = function() {};
-    const socketHeartbeatInterval = setInterval(function socketHeartbeat() {
-        // sockets removed from `subscriptions` during a manual terminate()
-        // will no longer be at risk of having functions called on them
-        for ( let endpointId in subscriptions ) {
-            const ws = subscriptions[endpointId];
-            if ( ws.isAlive ) {
-                ws.isAlive = false;
-                if ( ws.readyState === WebSocket.OPEN) ws.ping(noop);
-            } else {
-                if ( options.verbose ) options.log("Terminating inactive/broken WebSocket: "+ws.endpoint);
-                if ( ws.readyState === WebSocket.OPEN) ws.terminate();
-            }
-        }
-    }, 30000);
+//    const socketHeartbeatInterval = setInterval(function socketHeartbeat() {
+//        // sockets removed from `subscriptions` during a manual terminate()
+//        // will no longer be at risk of having functions called on them
+//        for ( let endpointId in subscriptions ) {
+//            const ws = subscriptions[endpointId];
+//            if ( ws.isAlive ) {
+//                ws.isAlive = false;
+//                if ( ws.readyState === WebSocket.OPEN) ws.ping(noop);
+//            } else {
+//                if ( options.verbose ) options.log("Terminating inactive/broken WebSocket: "+ws.endpoint);
+//                if ( ws.readyState === WebSocket.OPEN) ws.terminate();
+//            }
+//        }
+//    }, 30000);
     const subscribe = function(endpoint, callback, reconnect = false) {
         if ( options.verbose ) options.log("Subscribed to "+endpoint);
         const ws = new WebSocket(stream+endpoint);
